@@ -56,10 +56,10 @@ func rateLimiting() {
 	}
 	close(requests)
 
-	limiter := time.Tick(200 * time.Millisecond)
+	limiter := time.NewTicker(200 * time.Millisecond)
 
 	for req := range requests {
-		<-limiter
+		<-limiter.C
 		fmt.Println("request", req, time.Now())
 	}
 

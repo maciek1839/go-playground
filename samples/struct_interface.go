@@ -109,4 +109,5 @@ func Structs() {
 		str: "some name",
 	}
 	fmt.Printf("co={num: %v, str: %v}\n", co.num, co.str)
+	slog.Info(co.describe())
 }

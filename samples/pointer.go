@@ -10,10 +10,6 @@ type Person struct {
 	Age  int
 }
 
-func zeroval(ival int) {
-	ival = 0
-}
-
 func zeroptr(iptr *int) {
 	*iptr = 0
 }
@@ -26,8 +22,7 @@ func Pointers() {
 	slog.Info("A pointer is a variable that holds the memory address of another variable.")
 
 	var num int = 42
-	var ptr *int
-	ptr = &num
+	var ptr *int = &num
 	slog.Info("Value of 'num': " + strconv.Itoa(*ptr))
 
 	var p *Person = &Person{"John", 30}
@@ -36,8 +31,6 @@ func Pointers() {
 
 	i := 1
 	slog.Info("initial:" + strconv.Itoa(i))
-	zeroval(i)
-	slog.Info("zeroval:" + strconv.Itoa(i))
 
 	zeroptr(&i)
 	slog.Info("zeroptr:" + strconv.Itoa(i))

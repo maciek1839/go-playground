@@ -7,9 +7,8 @@ import (
 )
 
 type ExampleStruct struct {
-	var1    int
 	string1 string
-	var2    float32
+	var1    float32
 }
 
 func Variables() {
@@ -32,7 +31,7 @@ func Variables() {
 	// If a variable is not assigned any value, Go automatically initializes it with the zero value of the variable's type.
 	var e ExampleStruct
 	slog.Info("Struct: " + fmt.Sprintf("%#v", &e))
-	slog.Info("Struct.string1 " + e.string1)
+	slog.Info("Struct.string1 " + e.string1 + " Struct.var1 " + strconv.Itoa(int(e.var1)))
 
 	const f = 100_000
 	slog.Info("f: " + strconv.Itoa(f))

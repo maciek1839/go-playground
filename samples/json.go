@@ -68,11 +68,13 @@ func Jsons() {
 
 	str := `{"page": 1, "fruits": ["apple", "peach"]}`
 	res := response2{}
-	json.Unmarshal([]byte(str), &res)
+	err := json.Unmarshal([]byte(str), &res)
+	fmt.Println(err)
 	fmt.Println(res)
 	fmt.Println(res.Fruits[0])
 
 	enc := json.NewEncoder(os.Stdout)
 	d := map[string]int{"apple": 5, "lettuce": 7}
-	enc.Encode(d)
+	err2 := enc.Encode(d)
+	fmt.Println(err2)
 }
