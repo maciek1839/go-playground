@@ -16,11 +16,17 @@ Most code samples are based on:
 - https://go.dev/tour/list
 - https://gobyexample.com/
 
+Coding tasks references:
+- [Channels, ranges, pointers](https://medium.com/@ninucium/go-interview-questions-part-1-pointers-channels-and-range-67c61345cf3c)
+- [Slices](https://medium.com/@ninucium/go-interview-questions-part-2-slices-87f5289fb7eb)
+- StackOverflow problems to solve
+  - [Correctly close shared channels in goroutines](https://stackoverflow.com/questions/59018372/how-do-i-correctly-close-shared-channels-in-goroutines-while-processing-results)
+
 ## Getting started
 
-1. Install Go.
-2. Run `go mod tidy`.
-3. Run `main.go`.
+1. Install Go
+2. Run `go mod tidy`
+3. Run `main.go`
 
 ## Go
 
@@ -46,6 +52,34 @@ go env GOOS GOARCH
 Running this on Windows will print: `windows amd64`.
 
 [Building Go Applications for Different Operating Systems](https://www.digitalocean.com/community/tutorials/building-go-applications-for-different-operating-systems-and-architectures)
+
+### Data types
+
+![img](docs/types.png)
+
+[Reference](https://levelup.gitconnected.com/composite-data-types-in-golang-a829288b5553)
+
+### Slices
+
+A slice is a reference type that includes three main components:
+- Pointer to the array. This pointer points to the first element of the slice in the underlying array (the `slice` type in Go is an abstraction built over the array type).
+- Length. This is the number of stored elements in the slice. The length determines the current size of the slice, and it can be obtained using the len(slice) function.
+- Capacity. The capacity of a slice determines how many elements it can contain without the need to expand the underlying array. The capacity can be equal to or larger than the length of the slice, and it can be obtained using the cap(slice) function.
+
+Worth to remember:
+- A slice is a reference data type. Inside there is a pointer to the first element of the slice. This factor is what determines how certain operations, even when performed on copies of the slice, can affect the original slice.
+- A slice has a length, which describes the number of elements currently stored in the slice, and a capacity, which indicates how many elements can be added to this memory area.
+- If the inequality len(x) + 1 <= cap(x) is not met when adding a new element, the slice expands into a new area of memory, and capacity doubles (until it reaches the size of 1024, after which they increase by 25% with each expansion).
+- When you pass a slice as an argument to a function as a copy (not via a pointer), you should remember that the slice contains a pointer to the first element, which allows for modifications to the original slice.
+- The length and capacity values are passed by copy. If you pass a slice to a function and then the same slice is modified elsewhere in the code (e.g., by adding a new element), it will not affect the length and capacity of the copied slice within the function.
+
+![img](docs/slices.png)
+
+[Reference](https://medium.com/@ninucium/go-interview-questions-part-2-slices-87f5289fb7eb)
+
+More resources:
+- [Go docs](https://go.dev/blog/slices-intro)
+- [Are slices passed by value?](https://stackoverflow.com/questions/39993688/are-slices-passed-by-value)
 
 ### Concurrency
 
