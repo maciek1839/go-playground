@@ -24,7 +24,6 @@ func main() {
 	samples.Switches()
 	samples.Slices()
 	samples.Structs()
-	samples.Trees()
 	samples.Variables()
 	samples.Timers()
 	samples.Tickers()
@@ -34,14 +33,21 @@ func main() {
 	samples.Regex()
 	samples.Jsons()
 	samples.HttpClient()
+	samples.Reflection()
 
 	slog.Info("")
 	slog.Info("========== Tasks ==========")
 	slog.Info("> Below you can see coding tasks which help you understand Go.")
 	slog.Info("")
 
+	tasks.Trees()
 	tasks.Slices()
 	tasks.Channels()
+	tasks.Defer()
+	tasks.Polymorphism()
+	tasks.ConcurrentMap()
+	tasks.DesignPatters()
+	tasks.Types()
 
 	slog.Info("PROGRAM FINISHED")
 }

@@ -1,0 +1,168 @@
+# Interview questions
+
+## Basics
+
+- What are the benefits of using Go compared to other languages?
+  - Golang is optimized for concurrency and works well at scale. 
+  - Golang is often considered more readable than other languages due to a single standard code format. 
+  - Automatic garbage collection is notably more efficient than Java or Python because it executes concurrently alongside the program.
+- What are string literals?
+  - A string literal represents a string constant obtained from concatenating a sequence of characters. There are two forms: raw string literals and interpreted string literals.
+  - Raw string literals are character sequences between back quotes, as in `foo`. Within the quotes, any character may appear except back quote. The value of a raw string literal is the string composed of the uninterpreted (implicitly UTF-8-encoded) characters between the quotes.
+  - Interpreted string literals are character sequences between double quotes, as in "bar". Within the quotes, any character may appear except newline and unescaped double quote. The text between the quotes forms the value of the literal, with backslash escapes interpreted as they are in rune literals. [Reference](https://go.dev/ref/spec#String_literals)
+- What form of type conversion does Go support?
+  - Type conversion is the process of converting a value from one data type to another. Explicit type conversion in Go ensure compatibility between different data types.
+  - A type conversion converts one concrete type into another, it’s checked at compile time and is generally relatively safe.
+  - The difference between these two now and it seems that most of the sources I checked define `type cast` as explicit (done by programmer) and `type conversion` as implicit (done by compiler). Go supports the first one although it's called `type conversion` in this language.
+- What are Slices in Go?
+  - Slices in Go are a fundamental and flexible data structure used to work with data sequences.
+- How does Go handle variable declaration and initialization?
+  - You have the flexibility to declare and initialize variables using the `var` keyword. Additionally, variables can be initialized using short variable declarations (`:=`) right within functions.
+- What is a goroutine in Go?
+  - A Goroutine in Go is a lightweight, concurrent thread of execution that allows for efficient concurrent programming. Goroutines are a fundamental feature of Go's concurrency model and are managed by the Go runtime.
+  - A goroutine is a function or method that executes concurrently alongside any other goroutines using a special goroutine thread. Goroutine threads are more lightweight than standard threads, with most Golang programs using thousands of goroutines at once. 
+  - To create a goroutine, add the go keyword before the function declaration.
+- Can you explain the concept of channels in Go?
+  - Channels serve as a means of facilitating communication and synchronization among Goroutines, enabling the secure exchange of data between concurrently executing processes.
+- What are packages in Go, and how are they used?
+  - Packages are a way to organize and reuse Go code. They provide modularity and encapsulation, making managing and sharing code easier.
+- How does Go handle error reporting and handling?
+  - Go uses a simple approach of returning error values along with function results. Error handling is explicit, and developers can use `if` statements or defer the error check.
+- Can you describe the garbage collection process in Go?
+  - At a high level, a garbage collector (or GC, for short) is a system that recycles memory on behalf of the application by identifying which parts of memory are no longer needed. The Go standard toolchain provides a runtime library that ships with every application, and this runtime library includes a garbage collector.
+  - For instance, non-pointer Go values stored in local variables will likely not be managed by the Go GC at all, and Go will instead arrange for memory to be allocated that's tied to the lexical scope in which it's created. In general, this is more efficient than relying on the GC, because the Go compiler is able to predetermine when that memory may be freed and emit machine instructions that clean up. Typically, we refer to allocating memory for Go values this way as "stack allocation," because the space is stored on the goroutine stack.
+  - Go values whose memory cannot be allocated this way, because the Go compiler cannot determine its lifetime, are said to escape to the heap. "The heap" can be thought of as a catch-all for memory allocation, for when Go values need to be placed somewhere. The act of allocating memory on the heap is typically referred to as "dynamic memory allocation" because both the compiler and the runtime can make very few assumptions as to how this memory is used and when it can be cleaned up. That's where a GC comes in: it's a system that specifically identifies and cleans up dynamic memory allocations.
+  - There are many reasons why a Go value might need to escape to the heap. One reason could be that its size is dynamically determined. Consider for instance the backing array of a slice whose initial size is determined by a variable, rather than a constant. Note that escaping to the heap must also be transitive: if a reference to a Go value is written into another Go value that has already been determined to escape, that value must also escape.
+  - Escape analysis in Go is a way in which the compiler determines whether the value is to be stored in the stack frame or the heap.
+  - [Reference1](https://tip.golang.org/doc/gc-guide) [Reference2](https://stackoverflow.com/questions/10866195/stack-vs-heap-allocation-of-structs-in-go-and-how-they-relate-to-garbage-collec)
+- What are maps in Go?
+  - Maps in Go are key-value data structures. They allow efficient retrieval and storage of values based on unique keys.
+- How does Go achieve concurrency?
+  - Go uses Goroutines and channels to achieve concurrency.
+- Can you explain the use of interfaces in Go?
+  - Interfaces specify a collection of method signatures that a type must adhere to in order to fulfill the interface's contract. They facilitate polymorphism and promote loose coupling in code.
+  - Interfaces are a special type in Go that define a set of method signatures but do not provide implementations. Values of interface type can hold any value that implements those methods. 
+  - Interfaces essentially act as placeholders for methods that will have multiple implementations based on what object is using it.
+- What is a pointer in Go, and how is it used?
+  - A pointer in Go holds the memory address of a value. Pointers are used to reference and modify data indirectly, improving performance in some cases.
+- What are the looping constructs in Go?
+  - Go has only one looping construct: the for loop.
+- Describe the scope rules in Go.
+  - Local Variables(Declared Inside a block or a function)
+  - Global Variables(Declared outside a block or a function)
+  - [Reference](https://www.geeksforgeeks.org/scope-of-variables-in-go/)
+- Can you return multiple values from a function?
+  - Yes. A Go function can return multiple values, each separated by commas in the return statement.
+
+## Intermediate questions
+
+- Explain the steps of testing with Golang.
+  - Golang supports automated testing of packages with custom testing suites. 
+  - To create a new suite, create a file that ends with _test.go and includes a TestXxx function, where Xxx is replaced with the name of the feature you’re testing. For example, a function that tests login capabilities would be called TestLogin. 
+  - You then place the testing suite file in the same package as the file you wish to test. The test file will be skipped on regular execution but will run when you enter the go test command.
+- What are function closures?
+  - Function closures is a function value that references variables from outside its body. The function may access and assign values to the referenced variables. 
+  - For example: adder() returns a closure, which is each bound to its own referenced sum variable.
+- How do we perform inheritance with Golang?
+  - This is a bit of a trick question: there is no inheritance in Golang because it does not support classes.
+  - However, you can mimic inheritance behavior using composition to use an existing struct object to define a starting behavior of a new object. Once the new object is created, functionality can be extended beyond the original struct.
+- Can you explain the concept of deferring in Go?
+  - `defer` is employed to postpone the execution of a function call until a surrounding function completes, usually when that function is about to return. It is commonly utilized for performing cleanup operations.
+- How does Go handle memory management?
+  - Go manages memory automatically through its garbage collector, which reclaims no longer referenced memory.
+- What are structs in Go, and how are they used?
+  - Structs are composite data types that group together variables with different data types. They are used to create custom data structures.
+- Can you explain how polymorphism is achieved in Go?
+  - Polymorphism is the use of a single symbol to represent multiple different types.
+  - Ad hoc polymorphism refers mainly to function and operator overloading (the ability to provide multiple implementations of the same function or operator, with the right one being selected based on the types of the arguments), while parametric polymorphism refers mainly to generic programming (where functions or classes can have special type parameters that allows them to later be instantiated into a function or class that works for a specific type). [Reference](https://www.reddit.com/r/learnpython/comments/18869q9/ad_hoc_and_parametric_polymorphism/)
+  - Ad hoc polymorphism is a kind of polymorphism in which polymorphic functions can be applied to arguments of different types.
+  - Go supports polymorphism through interfaces only.
+- What is the difference between a method and a function in Go?
+  - Methods are functions associated with a type, while functions are standalone. Methods operate on instances of a type, making them more object-oriented.
+- How do you manage dependencies in Go projects?
+  - Go uses "go modules," a tool to manage dependencies. Developers specify dependencies in a `go.mod` file.
+- What's type inference?
+  - Type inference is the ability to automatically deduce, either partially or fully, the type of an expression at compile time. The compiler is often able to infer the type of a variable or the type signature of a function, without explicit type annotations having been given
+  - [Reference](https://go.dev/blog/type-inference)
+- Describe Go type system
+  - Basic types
+    - string, boolean (bool), numeric types
+  - Composite types
+    - pointer, struct, function, container (array, slice, map), channel, interface
+  - [Reference](https://go101.org/article/type-system-overview.html)
+- Explain Go’s approach to object-oriented programming.
+  - Go follows a composition-over-inheritance approach. It uses structs and interfaces for object-oriented programming without traditional classes or inheritance.
+- How do you write unit tests in Go?
+  - Go has a built-in testing package (`testing`) that allows you to write unit tests. Tests are typically placed in files with names like `*_test.go`.
+- What are Go routines, and how do they differ from threads?
+  - Go routines are lightweight threads managed by the Go runtime. They are more efficient than traditional threads and have lower overhead.
+- Can you explain channel buffering in Go?
+  - Channel buffering allows a channel to hold limited values before blocking. It can improve performance in certain scenarios.
+- What is type embedding in Go?
+  - Type embedding is a way to create new types by embedding existing types. It promotes code reuse and composition.
+- How do you handle JSON in Go?
+  - Go provides the `encoding/json` package for encoding and decoding JSON data. Struct tags are used to specify JSON field names.
+- What are the best practices for error handling in Go?
+  - Handle errors explicitly, avoid excessive error checking, and use idiomatic error messages to enhance code readability.
+- Can you explain Go’s concurrency patterns, like the worker pool?
+  - A worker pool is a common concurrency pattern in Go, where multiple Goroutines work together to process tasks from a shared queue.
+
+## Advanced questions
+
+- How do you optimize performance in a Go application?
+  - Optimizations include profiling, benchmarking, and using concurrency effectively. Identifying bottlenecks and optimizing critical code paths is crucial.
+  - Profile Your Code
+    - To begin, profile your application to detect performance bottlenecks. Go provides built-in profiling tools like the `pprof` package and the `go tool pprof` command-line tool. Profiling helps you understand which parts of your code consume the most time and resources.
+    - Apart from the built-in `pprof` package, you can use external profiling and tracing tools like `pprof`, `go-torch`, or `jaeger` to gain deeper insights into your application’s performance. These tools help identify hotspots, visualize performance data and trace requests across distributed systems.
+  - Optimize Algorithms and Data Structures
+    - Analyze your code for inefficient algorithms or data structures that can be optimized. Look for areas where you can replace slow operations with more efficient alternatives. Consider using appropriate data structures like maps, slices and arrays based on the specific requirements of your application.
+  - Efficient Memory Management
+    - Go’s garbage collector (GC) handles memory management, but inefficient memory usage can impact performance. Avoid unnecessary allocations by reusing objects and minimizing the use of `make` and `new` operations. Be cautious with large data structures that could strain the GC. Use tools like the `sync.Pool` package to reuse objects and reduce overhead.
+  - Concurrency and Parallelism
+    - Leverage Go’s concurrency features, such as goroutines and channels, to design concurrent and parallel programs. Identify sections of your code that can benefit from concurrent execution and partition work accordingly. However, be mindful of excessive goroutine creation, unnecessary locking, or contention that could introduce performance overhead.
+  - Use The Right Libraries and Packages
+    - Choose libraries or packages that are well-optimized and have a good performance record. The Go ecosystem offers a wide range of third-party packages, so consider their performance characteristics before integrating them into your application.
+  - Minimize I/O Operations
+    - I/O operations, such as disk reads/writes or network communication, can be a bottleneck. Reduce the number of I/O operations by batching requests, using buffered I/O and employing techniques like connection pooling or caching.
+  - Benchmark and Test
+    - Regularly benchmark and test your code to measure performance improvements and regressions. Go provides the `testing` package and the `go test` command for writing and running tests. Use the built-in benchmarking tool (`go test -bench`) to identify performance changes and track progress.
+  - Compiler Optimizations
+    - Go’s compiler (`gc`) applies various optimizations by default, but you can explore compiler flags to enable specific optimizations. For example, the `-N` flag disables optimizations, allowing you to compare the performance impact. The `-gcflags` flag allows you to pass custom compiler flags.
+  - [Reference](https://medium.com/@santoshcitpl/ultimate-golang-performance-optimization-guide-connect-infosoft-9c4c2b75b9f2)
+- How does Go memory allocation impact performance?
+  - Heap allocations can impact program performance, causing higher CPU overhead and increased garbage collection activity.
+- Explain the concept of reflection in Go and its use cases.
+  - Reflection gives you the ability to examine types at runtime. It also allows you to examine, modify, and create variables, functions, and structs at runtime. Reflection in Go is built around three concepts: Types, Kinds, and Values. [Reference](https://medium.com/capital-one-tech/learning-to-use-go-reflection-822a0aed74b7)
+  - Real examples ([ref](https://www.reddit.com/r/golang/comments/4x5pia/when_do_you_guys_use_reflection_in_golang/))
+    - I have tool which converts my golang structs to TypeScript interfaces. 
+    - A rest API and I need to have Swagger descriptor of all input and output structures.
+- How do you implement interfaces in Go without generics?
+  - Developers often use type assertions and type switches to work with different types through interfaces.
+  - Latest Go release introduced generics - [1.18](https://go.dev/blog/go1.18).
+- What are some common mistakes developers make in Go?
+  - Common mistakes include neglecting error handling, using global variables excessively, and ignoring best practices for concurrency.
+- Discuss the implementation of a concurrent map in Go.
+  - Implementing a concurrent map in Go often involves using a Mutex or the `sync` package's `Map` type to access and modify shared map data safely. 
+  - [Reference](https://stackoverflow.com/questions/36167200/how-safe-are-golang-maps-for-concurrent-read-write-operations)
+- How do you manage cross-compilation in Go?
+  - Go makes cross-compilation easy by specifying the target platform and architecture in the `GOOS` and `GOARCH` environment variables.
+- Can you explain Go’s scheduler and how it manages goroutines?
+  - The Go scheduler is a specific part of the Go runtime responsible for managing the execution of goroutines.
+  - It's an M:N scheduler, meaning it multiplexes M goroutines onto N OS threads. The primary job of the Go scheduler is to distribute goroutines over available threads and cores efficiently. Its responsibilities include:
+    - Goroutine Management: Deciding which goroutine runs on which thread and when. Go Scheduler acts like an orchestrator, managing the goroutines.
+    - Multiplexing: Go Scheduler is responsible for performing the M:N multiplexing, where it can efficiently run M goroutines on N OS threads. It aims to keep all CPU cores busy and to avoid bottlenecks.
+    - Cooperative Scheduling & Preemption: Interrupting goroutines ensures that long-running goroutines don't starve others from CPU time. From Go 1.14, the Go scheduler preempts goroutines, rather than following cooperative scheduling.
+  - [Reference1](https://medium.com/@hatronix/inside-the-go-scheduler-a-step-by-step-look-at-goroutine-management-1a8cbe9d5dbd) [Reference2](https://www.linkedin.com/pulse/go-concurrency-series-deep-dive-scheduleri-pratik-pandey-mhx4e)
+- How do you secure a Go web application?
+  - Securing a Go web application involves proper input validation, authentication, authorization, and protection against common web vulnerabilities like SQL injection and XSS.
+- How do you implement restful APIs in Go?
+  - You can implement RESTful APIs in Go using the `net/http` package. Define routes, and handlers, and use libraries like `gorilla/mux` for routing.
+- Can you discuss the best practices for deploying Go applications in a production environment?
+  - Best practices include using containerization (e.g., Docker), continuous integration and deployment (CI/CD), monitoring, and proper error handling for production readiness.
+
+
+## References
+
+- https://www.simplilearn.com/golang-interview-questions-article
+- https://www.educative.io/blog/50-golang-interview-questions
+

@@ -1,4 +1,4 @@
-package samples
+package tasks
 
 import (
 	"golang.org/x/exp/slog"

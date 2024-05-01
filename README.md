@@ -21,6 +21,8 @@ Coding tasks references:
 - [Slices](https://medium.com/@ninucium/go-interview-questions-part-2-slices-87f5289fb7eb)
 - StackOverflow problems to solve
   - [Correctly close shared channels in goroutines](https://stackoverflow.com/questions/59018372/how-do-i-correctly-close-shared-channels-in-goroutines-while-processing-results)
+- [A Tour of Go](https://go.dev/tour/welcome/1)
+- [Go by Example](https://gobyexample.com/)
 
 ## Getting started
 

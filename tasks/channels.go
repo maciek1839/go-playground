@@ -83,6 +83,23 @@ func Channels() {
 	// but to create a new variable v each time and copy the value to it in each iteration,
 	// and then pass its address to the channel.
 	problem1LoggingSolution()
+
+	exitGoroutine()
+}
+
+func exitGoroutine() {
+	quit := make(chan bool)
+	go func() {
+		for {
+			select {
+			case <-quit:
+				return
+			default:
+				fmt.Println("default...")
+			}
+		}
+	}()
+	quit <- true
 }
 
 func problem1Solution() {
