@@ -6,6 +6,7 @@
   - Golang is optimized for concurrency and works well at scale. 
   - Golang is often considered more readable than other languages due to a single standard code format. 
   - Automatic garbage collection is notably more efficient than Java or Python because it executes concurrently alongside the program.
+  - You can get an efficient performance like C and C++, good concurrency handling like Java.
 - What are string literals?
   - A string literal represents a string constant obtained from concatenating a sequence of characters. There are two forms: raw string literals and interpreted string literals.
   - Raw string literals are character sequences between back quotes, as in `foo`. Within the quotes, any character may appear except back quote. The value of a raw string literal is the string composed of the uninterpreted (implicitly UTF-8-encoded) characters between the quotes.
@@ -16,6 +17,15 @@
   - The difference between these two now and it seems that most of the sources I checked define `type cast` as explicit (done by programmer) and `type conversion` as implicit (done by compiler). Go supports the first one although it's called `type conversion` in this language.
 - What are Slices in Go?
   - Slices in Go are a fundamental and flexible data structure used to work with data sequences.
+  - Slice is one data type in GoLang. It is a simple and lightweight data structure used for storing homogeneous data of variable length. 
+  - There are three components of Slice: 
+    - Pointer
+      - It points to the first element of the array accessible using Slice.
+    - Length
+      - It is the count of the total number of elements in the slice. Length can be equal to or less than the capacity.
+    - Capacity
+      - It gives the maximum number of elements present in a Slice. It can be equal to or more than the capacity. 
+    - [Reference](https://www.naukri.com/code360/library/golang-interview-questions)
 - How does Go handle variable declaration and initialization?
   - You have the flexibility to declare and initialize variables using the `var` keyword. Additionally, variables can be initialized using short variable declarations (`:=`) right within functions.
 - What is a goroutine in Go?
@@ -43,8 +53,17 @@
   - Interfaces specify a collection of method signatures that a type must adhere to in order to fulfill the interface's contract. They facilitate polymorphism and promote loose coupling in code.
   - Interfaces are a special type in Go that define a set of method signatures but do not provide implementations. Values of interface type can hold any value that implements those methods. 
   - Interfaces essentially act as placeholders for methods that will have multiple implementations based on what object is using it.
+  - An interface acts as two things:
+    - Custom Types 
+    - Collection of Method Signatures
+- How would you explain GoLang Methods?
+  - We already know that GoLang works with methods but not classes. These methods are similar to the functions in other languages. The difference is that the Go Methods contain a receiver argument. The GoLang methods also determine the properties of the receiver.
+  - GoLang Methods are also known as receiver functions. These methods present a real-world and better concept.
+  - In Go, a receiver is a parameter of a method that binds the method to a specific type. [Reference](https://www.naukri.com/code360/library/golang-interview-questions)
 - What is a pointer in Go, and how is it used?
-  - A pointer in Go holds the memory address of a value. Pointers are used to reference and modify data indirectly, improving performance in some cases.
+  - A pointer in Go holds the memory address of a value. Pointers are a powerful feature of Go that allow you to manipulate memory addresses and access data directly in memory.
+  - * Operator also termed as the dereferencing operator used to declare pointer variable and access the value stored in the address.
+  - & operator termed as address operator used to return the address of a variable or to access the address of a variable to a pointer.
 - What are the looping constructs in Go?
   - Go has only one looping construct: the for loop.
 - Describe the scope rules in Go.
@@ -53,9 +72,24 @@
   - [Reference](https://www.geeksforgeeks.org/scope-of-variables-in-go/)
 - Can you return multiple values from a function?
   - Yes. A Go function can return multiple values, each separated by commas in the return statement.
+- What is the difference between = and := in Go?
+  - Declaration: = is used for assignment to already declared variables, whereas := is used for declaring and initializing a new variable. Type Inference: With :=, Go automatically infers the variable's type based on the value assigned to it. [Reference](https://dev.classmethod.jp/articles/difference-between-and-in-golang/)
+- Can you declare variables of different types in a single line of GoLang code?
+  - Yes, you can declare variables of different types in a single line of GoLang code.
+  - `var x, y, z= 9.6, 10, “codingninjas”` [Reference](https://www.naukri.com/code360/library/golang-interview-questions)
+- Is it possible to change any particular character in a String of a GoLang program?
+  - It is impossible to change any particular character in a String of a GoLang program. This is because the strings are immutable data types. If you try to alter any specific character in a String, you will get a runtime error. [Reference](https://www.naukri.com/code360/library/golang-interview-questions)
+- How arrays in GoLang are different from other programming languages?
+  - In GoLang, the size of an array influences the type of Array, unlike other languages. For example, [5]int and [7]int are not identical arrays.
+  - You will get a copy of the array if you pass an array to a function. In other languages, you get a pointer to that array. [Reference](https://www.naukri.com/code360/library/golang-interview-questions)
 
 ## Intermediate questions
 
+- What makes Go so fast?
+  - The program utilizes a single-pass compiler that generates compiled binaries directly, bypassing the requirement for intermediary steps. The optimized compilation process reduces the compilation and execution time of Go programs, facilitating quick development and deployment. [Reference](https://vivasoftltd.com/why-is-golang-much-faster-than-most-other-programming-languages/)
+- Does Go support method overloading?
+  - No, Go doesn't have overloading. Overloading adds compiler complexity and will likely never be added.
+  - Your best bet is to use generics and type constraints that were added in Go 1.18 [Reference](https://stackoverflow.com/questions/6986944/does-the-go-language-have-function-method-overloading)
 - Explain the steps of testing with Golang.
   - Golang supports automated testing of packages with custom testing suites. 
   - To create a new suite, create a file that ends with _test.go and includes a TestXxx function, where Xxx is replaced with the name of the feature you’re testing. For example, a function that tests login capabilities would be called TestLogin. 
@@ -106,9 +140,42 @@
   - Handle errors explicitly, avoid excessive error checking, and use idiomatic error messages to enhance code readability.
 - Can you explain Go’s concurrency patterns, like the worker pool?
   - A worker pool is a common concurrency pattern in Go, where multiple Goroutines work together to process tasks from a shared queue.
+- Explain the difference between concurrent and parallelism in Golang
+  - Concurrency is when your program can handle multiple tasks at once while parallelism is when your program can execute multiple tasks at once using multiple processors. 
+  - In other words, concurrency is a property of a program that allows you to have multiple tasks in progress at the same time, but not necessarily executing at the same time. Parallelism is a runtime property where two or more tasks are executed at the same time.
+  - The key tools for concurrency in Golang are goroutines and channels. Goroutines are concurrent lightweight threads while channels allow goroutines to communicate with each other during execution.
+- What is shadowing?
+  - Shadowing occurs in Go when a variable declared in a nested scope has the same name as a variable declared in an outer scope. In such cases, the variable in the inner scope shadows or hides the variable in the outer scope. [Reference](https://stackoverflow.com/questions/76143322/golang-shadowing-variable)
+- What is the purpose of a GOPATH environment variable?
+  - The GOPATH is an environment variable that points to the location of a Go Workspace's root folder. A Go Workspace, contains source files, compiled binaries, external libraries, and various cached objects. This collection of files includes everything necessary for a Golang development project. [Reference](https://www.linode.com/docs/guides/golang-gopath-and-workspaces/)
 
 ## Advanced questions
 
+- What does it mean when people say Go has a “rich standard library”?
+  - Strong Standard Library: Go comes with a rich standard library that includes packages for HTTP handling, JSON encoding/decoding, and more. This built-in support for common tasks simplifies microservices development and reduces the need for third-party libraries. [Reference](https://camunda.com/resources/microservices/go/)
+- What does GOROOT point to?
+  - GOROOT is for compiler/tools that comes from go installation. GOPATH is for your own go projects / 3rd party libraries (downloaded with "go get").
+  - In modern Go, you don't need to set GOPATH or GOROOT. In fact, unless you're doing something very specialized, it's best to have them unset on your system. You don't need to explicitly set GOROOT (Modern versions of Go can figure it out on their own based on the location of the go binary that you run). [Reference](https://stackoverflow.com/questions/7970390/what-should-be-the-values-of-gopath-and-goroot)
+- What is in the src directory?
+  - There is no standard project layout in go. Rule of thumb is to scale your project's structure to its complexity and size. The flat structure you've mentioned is the simplest form. [Reference](https://www.reddit.com/r/golang/comments/13wy3yr/why_no_src_directory/)
+- What is a unique benefit of Go’s compiler?
+  - Garbage collection: Go has a garbage collector that automatically manages memory, making it easier to write a compiler without worrying about memory management.
+  - Concurrency: Go has built-in support for concurrency, which can make it easier to write a compiler that can parallelize certain tasks.
+  - Safety: Go has a strong type system and includes several built-in safety features, such as bounds checking and pointer arithmetic restrictions, which can help prevent certain types of bugs.
+  - Cross-platform support: Go has excellent cross-platform support, which can make it easier to write a compiler that works on multiple platforms.
+  - Ease of use: Go has a simple, easy-to-learn syntax and a large standard library, which can make it easier to write and maintain a compiler.[Reference](https://www.quora.com/What-are-advantages-of-implementing-the-compiler-in-Golang-instead-of-C-in-Go-1-5)
+- When would you use a break statement in Go?
+  - When a break statement is encountered inside a loop, the loop is immediately terminated and the program control resumes at the next statement following the loop. 
+  - It can be used to terminate a case in a switch statement. [Reference](https://www.tutorialspoint.com/go/go_break_statement.htm)
+- Does Go have exceptions? How does Go handle errors?
+  - In GoLang, errors are any interface type implementing the Error() method. Here, you do not have try or catch methods as in other languages. Errors are returned as normal values. [Reference](https://www.naukri.com/code360/library/golang-interview-questions)
+  - Unlike many other languages, Golang doesn't have exceptions. Instead, errors are returned as values from functions, making error handling predictable and easier to reason about. [Reference](https://www.linkedin.com/pulse/mastering-error-handling-golang-shiva-raman-pandey)
+- Why is Go often called a “Post-OOP” language?
+  - Go is considered post-OOP because it minimizes reliance on classical object-oriented programming (OOP) principles, favoring composition over inheritance and emphasizing simplicity and efficiency in code design. [Reference](https://www.naukri.com/code360/library/golang-interview-questions)
+- What is a workspace?
+  - Go introduced the concept of workspaces in 1.18. Workspaces allow you to create projects of several modules that share a common list of dependencies through a new file called go.work. The dependencies in this file can span multiple modules and anything declared in the go.work file will override dependencies in the modules’ go.mod. [Reference1](https://earthly.dev/blog/go-workspaces/) [Reference2](https://go.dev/doc/tutorial/workspaces)
+- What is CGO? When would you want to use it?
+  - Cgo lets Go packages call C code. Given a Go source file written with some special features, cgo outputs Go and C files that can be combined into a single Go package. [Reference](https://go.dev/blog/cgo)
 - How do you optimize performance in a Go application?
   - Optimizations include profiling, benchmarking, and using concurrency effectively. Identifying bottlenecks and optimizing critical code paths is crucial.
   - Profile Your Code
@@ -165,4 +232,5 @@
 
 - https://www.simplilearn.com/golang-interview-questions-article
 - https://www.educative.io/blog/50-golang-interview-questions
+- https://www.naukri.com/code360/library/golang-interview-questions
 

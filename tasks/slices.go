@@ -1,6 +1,7 @@
 package tasks
 
 import (
+	"bytes"
 	"fmt"
 	"golang.org/x/exp/slog"
 )
@@ -14,6 +15,91 @@ func Slices() {
 	sliceExpansion()
 	sliceExpansion2()
 	subSlices()
+
+	x := []int{3, 2, 1}
+	reverse(x)
+
+	checkIfSliceIsEmpty()
+	compareSlices()
+}
+
+func compareSlices() {
+	x1 := []byte{'C', 'O', 'D', 'I', 'N', 'G'}
+	x2 := []byte{'N', 'I', 'N', 'J', 'A', 'S'}
+	output := bytes.Compare(x1, x2)
+	if output == 0 {
+		fmt.Println("Equal")
+	} else {
+		fmt.Println("Not Equal")
+	}
+}
+
+func checkIfSliceIsEmpty() {
+	// https://www.educative.io/blog/50-golang-interview-questions
+	// Create a program that checks if a slice is empty. Find the simplest solution.
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	// The easiest way to check if a slice is empty is to use the built-in len() function, which returns the length of a slice.
+	// If len(slice) == 0, then you know the slice is empty.
+	r := [3]int{1, 2, 3}
+
+	if len(r) == 0 {
+		fmt.Println("Empty! ", r)
+
+	} else {
+		fmt.Println("Not Empty!", r)
+	}
+}
+
+func reverse(sw []int) {
+	// https://www.educative.io/blog/50-golang-interview-questions
+	// Reverse the order of a slice
+	// Implement function reverse that takes a slice of integers and reverses the slice in place without using a temporary slice.
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	for a, b := 0, len(sw)-1; a < b; a, b = a+1, b-1 {
+		sw[a], sw[b] = sw[b], sw[a]
+	}
 }
 
 func sliceExpansion2() {

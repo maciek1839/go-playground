@@ -42,4 +42,12 @@ func Arrays() {
 		{1, 2, 3},
 	}
 	fmt.Println("2d: ", twoD)
+
+	testArray := []string{"one", "two", "three", "four", "five"}
+	array1(testArray)
+	fmt.Println("testArray: ", testArray)
+}
+
+func array1(arr []string) {
+	arr[0] = "change"
 }
