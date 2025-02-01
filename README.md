@@ -36,12 +36,10 @@ Golang, also known as Go, is a statically typed and compiled programming languag
 It is compiled to binary and a Go binary does not need system dependencies such as Go tooling to run on a new system.
 Putting these executables in an executable filepath on your own system will allow you to run the program from anywhere on your system.
 
-A compiled language is a programming language whose implementations
-are typically compilers (translators that generate machine code from source code),
-and not interpreters (step-by-step executors of source code, where no pre-runtime translation takes place).
+A statically typed language means that variable types are checked at compile time, rather than at runtime.
+In Go, for example, you must explicitly define or infer the type of a variable, and it cannot change later in the program.
 
-Static typing is a typing system where variables are bound to a data type during compilation.
-Once a variable is assigned a data type it remains unchanged throughout the program's execution.
+A compiled language is a programming language that requires its source code to be translated (compiled) into machine code before execution. This process is done using a compiler, which generates an executable file that can run directly on the target system without requiring further interpretation.
 
 > Go compiles to a target OS and CPU architecture.
 The result is statically linked so the binary will run almost anywhere that those two values hold true.

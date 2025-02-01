@@ -17,7 +17,7 @@ func ConcurrentMap() {
 	go Read()
 	time.Sleep(1 * time.Second)
 	go Write()
-	time.Sleep(1 * time.Minute)
+	time.Sleep(5 * time.Second)
 }
 
 func Read() {

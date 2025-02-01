@@ -1,4 +1,4 @@
-image: golang:1.21.9-alpine3.19@sha256:ed8ce6c22dd111631c062218989d17ab4b46b503cbe9a9cfce1517836e65298a
+image: golang:1.23.4-alpine3.19@sha256:5f3336882ad15d10ac1b59fbaba7cb84c35d4623774198b36ae60edeba45fd84
 
 before_script:
   - echo ':before_script'
@@ -37,7 +37,7 @@ linter:
   allow_failure: true
   script:
     - apk add build-base
-    - go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.55.2
+    - go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.63.4
     - golangci-lint run --timeout 10m --verbose ./...
 
 build:
@@ -46,6 +46,9 @@ build:
     # go mod tidy : Adds missing and removes unused modules and dependencies from the go. mod file.
     # It ensures that the go. mod file accurately reflects the required dependencies of your project.
     - go mod tidy
+    # The go mod verify command checks that the module hashes recorded in go.sum match the actual downloaded module files in the module cache.
+    # This ensures that your dependencies have not been tampered with or corrupted.
+    - go mod verify
     - go build -o bin/go-playground -v .
   artifacts:
     paths:
