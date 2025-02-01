@@ -1,4 +1,4 @@
-image: golang:1.21.9-alpine3.19
+image: golang:1.21.9-alpine3.19@sha256:ed8ce6c22dd111631c062218989d17ab4b46b503cbe9a9cfce1517836e65298a
 
 before_script:
   - echo ':before_script'
