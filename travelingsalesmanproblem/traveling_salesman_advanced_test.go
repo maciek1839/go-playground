@@ -1,4 +1,4 @@
-package problems
+package tsp
 
 import (
 	"testing"

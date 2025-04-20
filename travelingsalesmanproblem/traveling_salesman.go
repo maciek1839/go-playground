@@ -1,4 +1,4 @@
-package problems
+package tsp
 
 /**
 The Traveling Salesman Problem is a classic optimization problem in computer science and operations research.
